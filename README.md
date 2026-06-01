@@ -24,7 +24,7 @@ A full repository inspection (`git ls-files`, a working-tree search, and `git lo
 
 ## Target Stack
 
-The target runtime and framework are fixed (Python 3 + Flask). The direct target dependencies are exact pins; the transitive dependencies (`Werkzeug`, `Jinja2`) are noted as Flask-managed lower bounds, not exact pins. None of them are placeholders.
+The target runtime and framework are fixed (Python 3 + Flask). The direct target dependencies are exact pins; the transitive dependencies (`Werkzeug`, `Jinja2`) are noted as Flask-managed lower bounds, not exact pins. None of them are temporary version markers.
 
 | Component | Version | Role |
 |-----------|---------|------|
@@ -87,7 +87,7 @@ The port will use the idiomatic Flask **application-factory** layout shown below
 └── .gitignore               # (planned) venv, __pycache__, .env, *.pyc
 ```
 
-The exact `routes/`, `models/`, `services/`, `schemas/`, and `tests/` modules (the `<resource>`, `<entity>`, `<service>`, and `<schema>` placeholders above) are determined **1:1** by the original Node.js source — one Blueprint per Express router, one model per Node model, one service per controller, and one parity test suite per route group.
+The exact `routes/`, `models/`, `services/`, `schemas/`, and `tests/` modules (the `<resource>`, `<entity>`, `<service>`, and `<schema>` template tokens above) are determined **1:1** by the original Node.js source — one Blueprint per Express router, one model per Node model, one service per controller, and one parity test suite per route group.
 
 ## Setup
 
