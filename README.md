@@ -14,7 +14,7 @@ A full repository inspection (`git ls-files`, a working-tree search, and `git lo
 - No `package.json`, `package-lock.json`, or any other Node manifest.
 - No Node configuration, `.env`, or server entry point.
 
-The only tracked files are this `README.md` together with an **interim Python baseline** added during environment setup — `requirements.txt` (the definite core stack) and `.gitignore`. Neither is Node.js source, and **no Flask application code has been written yet**.
+**Verified baseline.** `git ls-files` resolves to exactly one tracked file — this `README.md`, whose original first line is the heading `# Artifact1`. The history consists of a single baseline commit, `9e0722a` (full SHA `9e0722ace21443bfac8a1400eab45ceacf9fe8dd`, "Initial commit"). No Node.js source, manifest, configuration, or `.env` exists, and **no Flask application code has been written yet**. The Python dependency manifest (`requirements.txt`), `.gitignore`, and every other file shown under *Planned Project Structure* below are **planned/conditional artifacts** — created only after the original Node.js source is supplied and its dependencies and environment are mapped 1:1.
 
 **Why this blocks the work.** The acceptance criterion is *"preserving all functionalities of the original project."* That set of functionalities is defined **entirely** by the original source. With the source absent, the behavior to replicate cannot be enumerated, implemented, or verified. In keeping with this project's prime directive, **no behavior will be fabricated** — no routes, models, middleware, services, or environment-variable names are invented while the source is missing.
 
@@ -24,7 +24,7 @@ The only tracked files are this `README.md` together with an **interim Python ba
 
 ## Target Stack
 
-The target runtime and framework are fixed (Python 3 + Flask). All versions below are exact, current pins; they are **not** placeholders.
+The target runtime and framework are fixed (Python 3 + Flask). The direct target dependencies are exact pins; the transitive dependencies (`Werkzeug`, `Jinja2`) are noted as Flask-managed lower bounds, not exact pins. None of them are placeholders.
 
 | Component | Version | Role |
 |-----------|---------|------|
@@ -35,7 +35,7 @@ The target runtime and framework are fixed (Python 3 + Flask). All versions belo
 | gunicorn | `gunicorn==26.0.0` | Production WSGI server (Linux) |
 | pytest | `pytest==9.0.3` | Test runner for parity tests |
 
-The definite core stack is already pinned in `requirements.txt`:
+Once the port is unblocked, the definite core stack written to `requirements.txt` will be:
 
 ```text
 Flask[dotenv]==3.1.3
@@ -58,7 +58,7 @@ Capability-specific adapters (for example, an ORM, JWT handling, CORS, or reques
 
 ## Planned Project Structure
 
-The port will use the idiomatic Flask **application-factory** layout shown below. This is the **planned/target** structure to be created once the original source is supplied; only the files marked *(present — baseline)* exist today.
+The port will use the idiomatic Flask **application-factory** layout shown below. This is the **planned/target** structure to be created once the original source is supplied; none of these files exist yet — the only tracked file today is this `README.md`.
 
 ```text
 .
@@ -81,17 +81,17 @@ The port will use the idiomatic Flask **application-factory** layout shown below
 ├── tests/
 │   ├── conftest.py          # pytest app/client fixtures
 │   └── test_<resource>.py   # per-route parity tests
-├── requirements.txt         # (present — baseline) Python dependency manifest
+├── requirements.txt         # (planned) Python dependency manifest mapped 1:1 from package.json
 ├── pyproject.toml           # (optional) project metadata / build configuration
 ├── .env.example             # documents environment keys (mirrors the original .env 1:1)
-└── .gitignore               # (present — baseline) venv, __pycache__, .env, *.pyc
+└── .gitignore               # (planned) venv, __pycache__, .env, *.pyc
 ```
 
 The exact `routes/`, `models/`, `services/`, `schemas/`, and `tests/` modules (the `<resource>`, `<entity>`, `<service>`, and `<schema>` placeholders above) are determined **1:1** by the original Node.js source — one Blueprint per Express router, one model per Node model, one service per controller, and one parity test suite per route group.
 
 ## Setup
 
-> Applicable once the application scaffold exists. The dependency manifest (`requirements.txt`) is already present.
+> Applicable once the application scaffold and dependency manifest exist. The steps below describe the intended workflow; `requirements.txt` is generated 1:1 from the original `package.json` once the port is unblocked.
 
 Python **3.12.x** is the target runtime. Create and activate a virtual environment, then install the pinned dependencies:
 
