@@ -1,0 +1,18 @@
+# Python dependency manifest — SETUP BASELINE (definite core stack).
+#
+# Source of truth: Technical Specification / AAP §0.3.1 "Core Target Stack (Definite)".
+# These packages are required regardless of the original project's specifics and are
+# pinned to the versions verified during AAP research.
+#
+# NOTE: This is an interim baseline created during environment setup. Once the original
+# Node.js source (and its package.json) is supplied, the implementation agent expands /
+# replaces this manifest 1:1 with the conditional adapter packages (AAP §0.3.2):
+# Flask-CORS, PyJWT/Flask-JWT-Extended, SQLAlchemy/Flask-SQLAlchemy + driver + Alembic,
+# PyMongo/MongoEngine, marshmallow/pydantic, requests/httpx, Flask-SocketIO, APScheduler,
+# Celery, Flask-Talisman, etc. — selected from the original npm dependencies.
+#
+# Target runtime: CPython 3.12.x (AAP §0.3.1).
+
+Flask[dotenv]==3.1.3
+gunicorn==26.0.0
+pytest==9.0.3
